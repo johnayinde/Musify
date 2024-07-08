@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn musify.wsgi
+web: python manage.py migrate && gunicorn spotify.wsgi
