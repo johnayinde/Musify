@@ -1,0 +1,167 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Streaming Service</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background: #121212;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    "
+  >
+    <div class="sidebar">
+      <!-- Spotify Logo -->
+      <div class="logo-container">
+        <img
+          src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png"
+          alt="Spotify Logo"
+          style="
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            box-sizing: border-box;
+          "
+        />
+      </div>
+
+      <!-- Welcome User -->
+      <div class="sidebar-section">
+        <span style="margin-left: 14px" class="sidebar-link-icon">👤</span>
+        <b>Welcome, {{user.username}}</b>
+        <br />
+        <br />
+
+        <a href="/logout">
+          <span class="sidebar-link-icon">↪️</span>
+          <b>Logout</b>
+        </a>
+      </div>
+
+      <!-- Top section of the sidebar -->
+      <div class="sidebar-section">
+        <a href="/" class="sidebar-link active">
+          <span class="sidebar-link-icon">🏠</span>
+          Home
+        </a>
+        <a href="search" class="sidebar-link">
+          <span class="sidebar-link-icon">🔍</span>
+          Search
+        </a>
+      </div>
+
+      <!-- Bottom section of the sidebar -->
+    </div>
+
+    <div style="margin-left: 240px; padding: 20px">
+      <header class="header-container">
+        <form method="POST" action="search">
+          {% csrf_token %}
+          <div class="search-bar" style="width: 390px">
+            <input
+              type="search"
+              name="search_query"
+              placeholder="What do you want to listen to?"
+              aria-label="Search"
+            />
+            <button type="submit" aria-label="Search">🔍</button>
+          </div>
+        </form>
+
+        <div class="search-title">Top Artists</div>
+      </header>
+
+      <main style="padding-top: 20px">
+        <section
+          style="
+            margin-top: 0px;
+            padding: 0px;
+            overflow-x: auto;
+            white-space: nowrap;
+          "
+        >
+          <!-- Artist Card -->
+          {% for artists in artists %}
+          <a href="/artist/{{artists.2}}" style="text-decoration: none">
+            <div class="artist-card">
+              {% comment %}
+              <a href="/music/{{artists.1}}" style="text-decoration: none">
+                {% endcomment %}
+                <img
+                  src="{{artists.1}}"
+                  alt="{{artists.0}}"
+                  style="width: 150px; height: 150px; border-radius: 50%"
+                />
+                <div class="artist-info">
+                  <div class="artist-name">{{artists.0}}</div>
+                  <div class="artist-title">Artist</div>
+                </div>
+                {% comment %}
+              </a>
+              {% endcomment %}
+            </div>
+          </a>
+          {% endfor %}
+
+          <!-- Add more content cards here -->
+        </section>
+        <!-- Repeat sections for other categories with more content cards -->
+
+        <!-- "Browse All" Section Title -->
+        <div class="browse-all-title">Browse all</div>
+
+        <!-- "Browse All" Section Content -->
+
+        <div class="browse-all">
+          <!-- Category Card -->
+          {% for track in track1 %}
+          <a href="/music/{{track.track_id}}" style="text-decoration: none">
+            <div class="category-card">
+              <img src="{{track.avatar_url}}" alt="{{track.track_name}}" />
+              <div class="category-title">{{track.name}}</div>
+            </div>
+          </a>
+
+          {% endfor %}
+
+          <!-- ... other categories ... -->
+        </div>
+
+        <div class="browse-all">
+          <!-- Category Card -->
+          {% for track in track2 %}
+          <a href="/music/{{track.track_id}}" style="text-decoration: none">
+            <div class="category-card">
+              <img src="{{track.avatar_url}}" alt="{{track.track_name}}" />
+              <div class="category-title">{{track.name}}</div>
+            </div>
+          </a>
+          {% endfor %}
+
+          <!-- ... other categories ... -->
+        </div>
+
+        <div class="browse-all">
+          <!-- Category Card -->
+          {% for track in track3 %}
+          <a href="/music/{{track.track_id}}" style="text-decoration: none">
+            <div class="category-card">
+              <img src="{{track.avatar_url}}" alt="{{track.track_name}}" />
+              <div class="category-title">{{track.name}}</div>
+            </div>
+          </a>
+          {% endfor %}
+
+          <!-- ... other categories ... -->
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
