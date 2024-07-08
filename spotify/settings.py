@@ -14,6 +14,8 @@ from pathlib import Path
 import os 
 from dotenv import load_dotenv
 load_dotenv()
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,13 +79,12 @@ WSGI_APPLICATION = 'spotify.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config( # type: ignore
+        conn_max_age=500,
+        conn_health_checks=True,
+    )
+    
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
